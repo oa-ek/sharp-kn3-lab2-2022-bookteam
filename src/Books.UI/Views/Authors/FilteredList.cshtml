@@ -1,0 +1,27 @@
+﻿@model ICollection<Books.Core.Entities.Book>
+@using Books.Core
+@using Books.Repositories.Repositories
+
+
+@if(Model != null)
+{
+    <div class="container">
+        <div class="row m-3">
+            @foreach (var item in Model)
+            {
+                <div class="col-3">
+                    <div class="card" style="width: 18rem;">
+                        <img class="card-img-top" src="\@Html.DisplayFor(modelItem => item.IconPath)" alt="Card image cap">
+                        <div class="card-body">
+                            <h5 class="card-title">@Html.DisplayFor(modelItem => item.Title)</h5>
+                            <p class="card-text">@Html.DisplayFor(modelItem => item.Authors)</p>
+                            <a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" class="btn btn-primary">View Details</a>
+                            <a asp-controller="Books" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                            <a asp-controller="Books" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+}

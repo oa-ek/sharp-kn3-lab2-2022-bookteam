@@ -1,0 +1,22 @@
+﻿@model IEnumerable<Books.Core.Entities.Author>
+
+<div class="container">
+	<div class="row mt-3">
+		@foreach(var author in Model)
+		{
+			<div class="col-3">
+				<div class="card">
+					<div class="card-body">
+                        <a asp-action="FilteredList" asp-route-id="@author.Id" class="btn btn-light" >@author.Name</a>
+                        @if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Delete" asp-route-id="@author.Id" class="btn btn-danger">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@author.Id" class="btn btn-warning">Edit</a>
+						}
+					</div>
+				</div>
+			</div>
+		}
+	</div>
+</div>
+

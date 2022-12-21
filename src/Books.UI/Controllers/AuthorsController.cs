@@ -8,10 +8,27 @@ namespace Books.UI.Controllers
     {
         private readonly AuthorRepository _authorRepository;
         private readonly BooksDbContext dbContext;
+        public AuthorsController(BooksDbContext dbContext)
+        {
+            _authorRepository = new AuthorRepository(dbContext);
+            this.dbContext = dbContext;
+        }
+
         // GET: ActorController
         public ActionResult Index()
-        {
+        {            
+            var authors = _authorRepository.GetAllAuthors();
+            //ViewData["Genres"] = allgenres;
+            return View(authors);
+
             return View();
+        }
+        public ActionResult FilteredList(int id)
+        {
+            var query = from x in dbContext.Books
+                        where x.Authors.Any(x => x.Id == id)
+                        select x;
+            return View(query.ToList());
         }
 
         // GET: ActorController/Details/5
