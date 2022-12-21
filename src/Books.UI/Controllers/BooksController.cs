@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Linq;
 
 namespace Books.UI.Controllers
 {
@@ -37,7 +38,12 @@ namespace Books.UI.Controllers
             var bquery = from x in dbContext.Books select x;
             if(!String.IsNullOrEmpty(bookSearch))
             {
-                bquery = bquery.Where(x => x.Title.Contains(bookSearch));
+                bquery = bquery.Where(x => x.Title.Contains(bookSearch)
+                || x.Authors.Any(x => x.Name.Contains(bookSearch))
+                || x.Publishers.Name.Contains(bookSearch)
+                || x.Description.Contains(bookSearch)
+                || x.Genres.Any(x => x.GenreName.Contains(bookSearch))
+                || x.PublishDate.ToString().Contains(bookSearch));
             }
             return View(await bquery.Include(x => x.Authors).ToListAsync());
         }

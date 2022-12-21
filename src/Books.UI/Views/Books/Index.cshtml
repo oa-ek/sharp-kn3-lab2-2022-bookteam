@@ -2,8 +2,22 @@
 @using Books.Repositories.Repositories
 @model IEnumerable<Books.Core.Entities.Book>
 
+<div class="d-flex justify-content-center">
+    <div class="col-md-10 col-lg-9 col-xl-8">
+        <form asp-controller="Books" asp-action="Index" method="get">
+            <div class="row g-2">
+                <div class="col-md-10">
+                    <input type="text" class="form-control" name="bookSearch" placeholder="Fiction">
+                </div>
+                <div class="col-md-2 d-grid gap-2">
+                    <button type="submit" class="btn btn-success">Search</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
 <div class="container">
-	<div class="row m-3">
+    <div class="row m-3">
 		@foreach (var item in Model)
 		{
 			<div class="col-3">
