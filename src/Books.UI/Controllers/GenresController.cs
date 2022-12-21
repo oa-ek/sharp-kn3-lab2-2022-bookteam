@@ -20,6 +20,13 @@ namespace Books.UI.Controllers
             //ViewData["Genres"] = allgenres;
             return View(allgenres);
         }
+        public ActionResult FilteredList(int id)
+        {
+            var query = from x in dbContext.Books
+                        where x.Genres.Any(x => x.Id == id)
+                        select x;
+            return View(query.ToList());
+        }
 
         // GET: GenreController/Details/5
         public ActionResult Details(int id)
