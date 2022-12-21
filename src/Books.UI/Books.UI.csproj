@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="Views\Authors\" />
+    <Folder Include="Views\Publishers\" />
   </ItemGroup>
 
 </Project>
