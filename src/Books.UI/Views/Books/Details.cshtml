@@ -1,0 +1,19 @@
+﻿@model Books.Core.Entities.Book
+<div class="container">
+	<div class="row align-content-center">
+		<div class="col-6" style="width: 18rem;">
+			<img class="card-img-top" src="\@Html.DisplayFor(modelItem => Model.IconPath)" alt="Card image cap">
+		</div>
+		<div class="col-6" style="border: 1px solid grey">
+			<h3 class="fw-bold text-center">@Html.DisplayFor(modelItem => Model.Title)</h3>
+			<p>Authors: @Html.DisplayFor(modelItem => Model.Authors)</p>
+			<p>Genres: @Html.DisplayFor(modelItem => Model.Genres)</p>
+			<p>Publisher: @Html.DisplayFor(modelItem => Model.Publishers.Name)</p>
+			<p>Publish date: @Html.DisplayFor(modelItem => Model.PublishDate)</p>
+			<p>Pages: @Html.DisplayFor(modelItem => Model.PageCount)</p>
+			<p>Rating: @Html.DisplayFor(modelItem => Model.Rating)</p>
+			<br />
+			<p>@Html.DisplayFor(modelItem => Model.Description)</p>
+		</div>
+	</div>
+</div>

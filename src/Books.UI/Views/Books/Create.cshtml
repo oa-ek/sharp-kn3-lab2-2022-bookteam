@@ -1,0 +1,90 @@
+﻿@using Books.Core
+@using Books.Core.Entities
+@using Books.Repositories
+@model Book
+@{
+	List<Genre> genres = ViewBag.Genres;
+	List<Author> authors = ViewBag.Authors;
+	List<Publisher> publishers = ViewBag.Publishers;
+}
+<div class="container">
+	<h3>Create Item</h3>
+	<hr />
+	@Html.HiddenFor(model => model.Id)
+	<form asp-action="Create" enctype="multipart/form-data" class="form-group">
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+		<div class="form-group">
+			<label asp-for="Title" class="control-label"></label>
+			<input asp-for="Title" class="form-control" />
+			<span asp-validation-for="Title" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="Description" class="control-label"></label>
+			<input asp-for="Description" class="form-control" />
+			<span asp-validation-for="Description" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="Rating" class="control-label"></label>
+			<input asp-for="Rating" class="form-control" />
+			<span asp-validation-for="Rating" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="PageCount" class="control-label">Page Count</label>
+			<input asp-for="PageCount" class="form-control" />
+			<span asp-validation-for="PageCount" class="text-danger"></span>
+		</div>
+
+		<div class="form-group">
+			<label asp-for="IconPath" class="control-label">Icon</label>
+			<input class="form-control" name="Image" id="Image" type="file" />
+			<span asp-validation-for="IconPath" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="PublishDate" class="control-label">Publish Date</label>
+			<input asp-for="PublishDate" class="form-control" />
+			<span asp-validation-for="PublishDate" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+            <label asp-for="Publishers" class="form-label"></label>
+            <select class="form-select" id="publisher" name="publisher">
+                @foreach (Publisher p in publishers)
+                {
+                    <option value="@p.Name">@p.Name</option>
+                }
+            </select>
+        </div>
+		<div class="form-group">
+            <label asp-for="Authors" class="form-label"></label>
+            <select class="form-select" size="3" id="authors" name="authors" multiple>
+                @foreach (Author a in authors)
+                {
+                    <option value="@a.Name">@a.Name</option>
+                }
+            </select>
+        </div>
+		<div class="form-group">
+            <label asp-for="Genres" class="form-label"></label>
+            <select class="form-select" size="3" id="genres" name="genres" multiple>
+                @foreach (Genre g in genres)
+                {
+                    <option value="@g.GenreName">@g.GenreName</option>
+                }
+            </select>
+        </div>
+		<br />
+		<div class="form-group">
+			<input type="submit" value="Create" class="btn btn-outline-success float-right" />
+		</div>
+	</form>
+</div>
+
+@section Scripts {
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	<script>
+        $(function() {
+			$(".form-select").select2();
+		});
+	</script>
+}

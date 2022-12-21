@@ -1,0 +1,92 @@
+﻿@using Books.Core
+@using Books.Core.Entities
+@using Books.Repositories
+@model Book
+@{
+	List<Author> authors = ViewBag.Authors;
+	List<Genre> genres = ViewBag.Genres;
+	List<Publisher> publishers = ViewBag.Publishers;
+}
+<div class="container">
+	<h3>Create Item</h3>
+	<hr />
+	<form asp-action="Edit" class="form-group">
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @Html.HiddenFor(model => model.Id)
+		<div class="form-group">
+			<label asp-for="Title" class="control-label"></label>
+			<input asp-for="Title" class="form-control" />
+			<span asp-validation-for="Title" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="Description" class="control-label"></label>
+			<input asp-for="Description" class="form-control" />
+			<span asp-validation-for="Description" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="Rating" class="control-label"></label>
+			<input asp-for="Rating" class="form-control" />
+			<span asp-validation-for="Rating" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="PageCount" class="control-label">Page Count</label>
+			<input asp-for="PageCount" class="form-control" />
+			<span asp-validation-for="PageCount" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="IconPath" class="control-label">Icon</label>
+			<input asp-for="IconPath" class="form-control" />
+			<span asp-validation-for="IconPath" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+			<label asp-for="PublishDate" class="control-label">Publish Date</label>
+			<input asp-for="PublishDate" class="form-control" />
+			<span asp-validation-for="PublishDate" class="text-danger"></span>
+		</div>
+		<div class="form-group">
+            <label asp-for="Publishers" class="form-label"></label>
+            <select class="form-select" id="publisher" name="publisher">
+                @foreach (Publisher p in publishers)
+                {
+					var selected = Model.Publishers?.Name == p.Name ? true : false;
+                    <!option value="@p.Name" @(selected ? "selected" : "")>@p.Name</!option>
+                }
+            </select>
+        </div>
+		<div class="form-group">
+            <label asp-for="Authors" class="form-label"></label>
+            <select class="form-select" size="3" id="authors" name="authors" multiple>
+                @foreach (Author a in authors)
+                {
+					var selected = Model.Authors.Any(x => x.Name == a.Name) ? true : false;
+                    <!option value="@a.Name" @(selected ? "selected" : "")>@a.Name</!option>
+                }
+            </select>
+        </div>
+		<div class="form-group">
+            <label asp-for="Genres" class="form-label"></label>
+            <select class="form-select" size="3" id="genres" name="genres" multiple>
+                @foreach (Genre g in genres)
+                {
+					var selected = Model.Genres.Any(x => x.GenreName == g.GenreName) ? true : false;
+					<!option value="@g.GenreName" @(selected ? "selected" : "") >@g.GenreName</!option>
+                }
+            </select>
+        </div>
+		<br />
+		<div class="form-group">
+			<input type="submit" value="Create" class="btn btn-outline-success float-right" />
+		</div>
+	</form>
+</div>
+
+@section Scripts {
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	<script>
+        $(function() {
+			$(".form-select").select2();
+		});
+	</script>
+}
