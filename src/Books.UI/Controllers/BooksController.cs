@@ -126,7 +126,6 @@ namespace Books.UI.Controllers
         [HttpPost]
         public ActionResult Edit(Book book, string publisher, string[] authors, string[] genres)
         {
-            
             Book edited = dbContext.Books.Include(x => x.Genres).Include(x => x.Authors).FirstOrDefault(x => x.Id == book.Id);
             edited.Title = book.Title;
             edited.Description = book.Description;

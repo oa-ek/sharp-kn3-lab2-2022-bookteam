@@ -1,6 +1,8 @@
 ﻿using Books.Core;
+using Books.Core.Entities;
 using Books.Repositories.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Books.UI.Controllers
 {
@@ -28,12 +30,6 @@ namespace Books.UI.Controllers
             return View(query.ToList());
         }
 
-        // GET: GenreController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: GenreController/Create
         public ActionResult Create()
         {
@@ -42,59 +38,47 @@ namespace Books.UI.Controllers
 
         // POST: GenreController/Create
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Genre genre)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            dbContext.Genres.Add(genre);
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: GenreController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Genre genre = dbContext.Genres.FirstOrDefault(x => x.Id == id);
+            if (genre == null) return NotFound();
+            return View(genre);
         }
 
         // POST: GenreController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Genre genre)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Genre edited = dbContext.Genres.FirstOrDefault(x => x.Id == genre.Id);
+            edited.GenreName = genre.GenreName;
+
+            dbContext.Entry(edited).State = EntityState.Modified;
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: GenreController/Delete/5
-        public ActionResult Delete(int id)
+        [HttpGet]
+        public ActionResult Delete(int? id)
         {
-            return View();
+            return View(dbContext.Genres.Find(id));
         }
 
         // POST: GenreController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            dbContext.Genres.Remove(dbContext.Genres.Find(id));
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
     }
 }
