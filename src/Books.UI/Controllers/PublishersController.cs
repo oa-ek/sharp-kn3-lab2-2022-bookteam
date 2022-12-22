@@ -1,7 +1,9 @@
 ﻿using Books.Core;
+using Books.Core.Entities;
 using Books.Repositories.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Books.UI.Controllers
 {
@@ -28,12 +30,6 @@ namespace Books.UI.Controllers
             return View(query.ToList());
         }
 
-		// GET: PublishersController/Details/5
-		public ActionResult Details(int id)
-		{
-			return View();
-		}
-
 		// GET: PublishersController/Create
 		public ActionResult Create()
 		{
@@ -42,59 +38,46 @@ namespace Books.UI.Controllers
 
 		// POST: PublishersController/Create
 		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Create(IFormCollection collection)
+		public ActionResult Create(Publisher publisher)
 		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
+            dbContext.Publishers.Add(publisher);
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
 		}
 
 		// GET: PublishersController/Edit/5
 		public ActionResult Edit(int id)
 		{
-			return View();
+            Publisher publisher = dbContext.Publishers.FirstOrDefault(x => x.Id == id);
+            if (publisher == null) return NotFound();
+            return View(publisher);
 		}
 
 		// POST: PublishersController/Edit/5
 		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Edit(int id, IFormCollection collection)
+		public ActionResult Edit(Publisher publisher)
 		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
+            Publisher edited = dbContext.Publishers.FirstOrDefault(x => x.Id == publisher.Id);
+            edited.Name = publisher.Name;
+
+            dbContext.Entry(edited).State = EntityState.Modified;
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
 		}
 
 		// GET: PublishersController/Delete/5
-		public ActionResult Delete(int id)
+		public ActionResult Delete(int? id)
 		{
-			return View();
+            return View(dbContext.Publishers.Find(id));
 		}
 
 		// POST: PublishersController/Delete/5
 		[HttpPost]
-		[ValidateAntiForgeryToken]
-		public ActionResult Delete(int id, IFormCollection collection)
+		public ActionResult Delete(int id)
 		{
-			try
-			{
-				return RedirectToAction(nameof(Index));
-			}
-			catch
-			{
-				return View();
-			}
+            dbContext.Publishers.Remove(dbContext.Publishers.Find(id));
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
 		}
 	}
 }

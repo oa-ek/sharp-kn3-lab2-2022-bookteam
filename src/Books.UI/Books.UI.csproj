@@ -21,8 +21,4 @@
     <ProjectReference Include="..\Books.Repositories\Books.Repositories.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Views\Publishers\" />
-  </ItemGroup>
-
 </Project>

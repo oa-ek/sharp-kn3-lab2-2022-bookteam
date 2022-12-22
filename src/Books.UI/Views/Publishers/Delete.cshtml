@@ -1,0 +1,16 @@
+﻿@using Books.Core.Entities
+@model Publisher
+@{
+	ViewData["Title"] = "Delete";
+	Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div class="container">
+    <h4>Do you really want to delete this publisher?</h4>
+    <hr />
+    <form method="post" asp-action="Delete">
+        <input type="hidden" asp-for="Id">
+        <input type="submit" value="Delete" class="btn btn-danger" />
+        <a asp-action="Index">Back</a>
+    </form>
+</div>
+
