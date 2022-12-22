@@ -26,9 +26,11 @@
 					<div class="card-body">
 						<h5><a asp-action="Details" asp-route-id="@item.Id" style="text-decoration:none">@item.Title</a></h5>
 						<p class="card-text">@Html.DisplayFor(modelItem => item.Authors)</p>
-
-						<a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
-						<a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                        @if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+                        {
+                            <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-danger">Delete</a>
+                            <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Edit</a>
+                        }
 					</div>
 				</div>
 			</div>
