@@ -13,7 +13,7 @@
                     <div class="card" style="width: 18rem;">
                         <img class="card-img-top" src="\@Html.DisplayFor(modelItem => item.IconPath)" alt="Card image cap">
                         <div class="card-body">
-                            <h5><a asp-action="Details" asp-route-id="@item.Id" style="text-decoration:none">@item.Title</a></h5>
+                            <h5><a asp-controller="Books" asp-action="Details" asp-route-id="@item.Id" style="text-decoration:none">@item.Title</a></h5>
 
                             <p class="card-text">@Html.DisplayFor(modelItem => item.Authors)</p>
                             @if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
