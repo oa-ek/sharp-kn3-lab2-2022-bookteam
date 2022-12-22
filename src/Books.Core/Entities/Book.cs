@@ -21,7 +21,7 @@ namespace Books.Core.Entities
         public int PageCount { get; set; }
         [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime PublishDate { get; set; }
-        public string? IconPath { get; set; } // Шлях до іконки
+        public string? IconPath { get; set; }
         public float? Rating { get; set; }
         public virtual ICollection<User>? Users { get; set; } = new List<User>();
         public override string ToString()

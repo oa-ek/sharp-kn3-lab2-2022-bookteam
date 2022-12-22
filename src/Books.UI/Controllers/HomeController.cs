@@ -30,20 +30,5 @@ namespace Books.UI.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-/*
-        private readonly ILogger<HomeController> _logger;
-        private readonly BookRepository _bookRepository;
-
-        public HomeController(ILogger<HomeController> logger, BookRepository bookRepository)
-        {
-            _logger = logger;
-            _bookRepository = bookRepository;
-        }
-
-        public async Task <IActionResult> Index()
-        {
-            return View(_bookRepository.GetAllBooks());
-        }
-*/
     }
 }
