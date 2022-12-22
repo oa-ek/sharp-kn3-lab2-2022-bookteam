@@ -20,6 +20,9 @@ namespace Books.Core
             builder.Entity<Book>()
                 .HasMany(x => x.Genres)
                 .WithMany(x => x.Books);
+            builder.Entity<User>()
+                .HasMany(x => x.Books)
+                .WithMany(x => x.Users);
             builder.Seed();
             base.OnModelCreating(builder);
         }

@@ -19,9 +19,11 @@ namespace Books.Core.Entities
         public string? Description { get; set; }
         public virtual ICollection<Genre>? Genres { get; set; } = new List<Genre>();
         public int PageCount { get; set; }
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime PublishDate { get; set; }
         public string? IconPath { get; set; } // Шлях до іконки
         public float? Rating { get; set; }
+        public virtual ICollection<User>? Users { get; set; } = new List<User>();
         public override string ToString()
         {
             return $"{Title}";

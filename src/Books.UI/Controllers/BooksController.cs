@@ -184,5 +184,16 @@ namespace Books.UI.Controllers
             dbContext.SaveChanges();
             return RedirectToAction(nameof(Index));
         }
+        public ActionResult Bookmarked(int id)
+        {
+            var book = dbContext.Books.FirstOrDefault(x => x.Id == id);
+            var currentUser = dbContext.Users.Include(x => x.Books).FirstOrDefault(x => x.UserName == User.Identity.Name);
+            if (book != null && currentUser != null)
+            {
+                currentUser.Books.Add(book);
+                dbContext.SaveChanges();
+            }
+            return RedirectToAction("Details", new {id});
+        }
     }
 }
