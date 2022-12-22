@@ -75,9 +75,17 @@ namespace Books.UI.Controllers
 		[HttpPost]
 		public ActionResult Delete(int id)
 		{
-            dbContext.Publishers.Remove(dbContext.Publishers.Find(id));
-            dbContext.SaveChanges();
-            return RedirectToAction(nameof(Index));
+            try
+            {
+                dbContext.Publishers.Remove(dbContext.Publishers.Find(id));
+                dbContext.SaveChanges();
+                return RedirectToAction(nameof(Index));
+            }
+            catch
+            {
+                TempData["AlertMessage"] = "Failed to remove the publisher";
+                return View();
+            }
 		}
 	}
 }

@@ -4,6 +4,12 @@
 	ViewData["Title"] = "Delete";
 	Layout = "~/Views/Shared/_Layout.cshtml";
 }
+@if (TempData["AlertMessage"] != null)
+{
+    <div class="alert alert-danger">
+        @TempData["AlertMessage"]
+    </div>
+}
 <div class="container">
     <h4>Do you really want to delete this publisher?</h4>
     <hr />
