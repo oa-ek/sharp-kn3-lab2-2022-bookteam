@@ -1,6 +1,8 @@
 ﻿using Books.Core;
+using Books.Core.Entities;
 using Books.Repositories.Repositories;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Books.UI.Controllers
 {
@@ -18,7 +20,6 @@ namespace Books.UI.Controllers
         public ActionResult Index()
         {            
             var authors = _authorRepository.GetAllAuthors();
-            //ViewData["Genres"] = allgenres;
             return View(authors);
 
             return View();
@@ -31,12 +32,6 @@ namespace Books.UI.Controllers
             return View(query.ToList());
         }
 
-        // GET: ActorController/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
         // GET: ActorController/Create
         public ActionResult Create()
         {
@@ -46,58 +41,46 @@ namespace Books.UI.Controllers
         // POST: ActorController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Author author)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            dbContext.Authors.Add(author);
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: ActorController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            Author author = dbContext.Authors.FirstOrDefault(x => x.Id == id);
+            if (author == null) return NotFound();
+            return View(author);
         }
 
         // POST: ActorController/Edit/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Author author)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            Author edited = dbContext.Authors.FirstOrDefault(x => x.Id == author.Id);
+            edited.Name = author.Name;
+
+            dbContext.Entry(edited).State = EntityState.Modified;
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: ActorController/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Delete(int? id)
         {
-            return View();
+            return View(dbContext.Authors.Find(id));
         }
 
         // POST: ActorController/Delete/5
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id)
         {
-            try
-            {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
+            dbContext.Authors.Remove(dbContext.Authors.Find(id));
+            dbContext.SaveChanges();
+            return RedirectToAction(nameof(Index));
         }
     }
 }

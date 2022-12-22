@@ -1,5 +1,12 @@
 ﻿@model IEnumerable<Books.Core.Entities.Author>
 
+@if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
+{
+    <div class="container d-flex align-items-center justify-content-center">
+        <a asp-controller="Authors" asp-area="" asp-action="Create" class="btn btn-success">Add author</a>
+    </div>
+    <hr />
+}
 <div class="container">
 	<div class="row mt-3">
 		@foreach(var author in Model)

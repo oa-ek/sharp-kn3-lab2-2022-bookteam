@@ -1,0 +1,21 @@
+﻿@using Books.Core
+@using Books.Core.Entities
+@model Author
+<div class="container">
+	<h3>Create Author</h3>
+	<hr />
+	<form asp-action="Create" class="form-group">
+		<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        @Html.HiddenFor(model => model.Id)
+		<div class="form-group">
+			<label asp-for="Name" class="control-label"></label>
+			<input asp-for="Name" class="form-control" />
+			<span asp-validation-for="Name" class="text-danger"></span>
+		</div>
+		<br />
+		<div class="form-group">
+			<input type="submit" value="Create" class="btn btn-outline-success float-right" />
+		</div>
+	</form>
+</div>
+
