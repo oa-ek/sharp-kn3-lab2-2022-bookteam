@@ -2,11 +2,14 @@
 
 @if (User.IsInRole("Moderator") || User.IsInRole("Admin"))
 {
-    <div class="container d-flex align-items-center justify-content-center">
-        <a asp-controller="Publishers" asp-area="" asp-action="Create" class="btn btn-success">Add publisher</a>
+    <div class="float-end">
+        <a asp-controller="Publishers" asp-area="" asp-action="Create" class="btn btn-outline-primary">Add publisher</a>
     </div>
-    <hr />
 }
+
+<h2>Publishers</h2>
+<hr />
+
 <div class="container">
 	<div class="row row-cols-3">
 		@foreach(var publisher in Model)
